@@ -8,28 +8,42 @@ for i = 40:20:400 %loops through frequncy
     values=0:1/fs:duration;
     a=amp*sin(2*pi* freq*values);
    
+    currentPath  = pwd;
+    
     count = 1;
+
+            for j =1:200 
+                 vectorSamples= a(count:count+199999);
+                 count = count+199999; 
+
+                 figure
+                 fs = 200
+                 [wt, period] = cwt(vectorSamples,fs); 
+
+                 dt = 1/fs;
+                 Norig = fs;
+                 t = 0:dt:(Norig*dt)-dt;
+
+                 figure
+                 imagesc(t,period, abs(wt));
+
+                 folderName = strcat(num2str(i),'Hz');
+                 mkdir ([folderName])
+                 cd ([folderName]) 
+
+                 imageName = strcat(num2str(i),'_',num2str(j));
+                 set(gca,'XTick',[]) % Remove the ticks in the x axis!
+                 set(gca,'YTick',[]) % Remove the ticks in the y axis
+                 set(gca,'Position',[0 0 1 1]) % Make the axes occupy the hole figure
+                 saveas(gcf,imageName,'png')
+
+                im = imread(strcat(imageName,'.png'));
+                im = imresize(im, [128 128])
+
+            end
     
-    for j =1:200 
-         vectorSamples= a(count:count+199999);
-         count = count+199999; 
-         
-         figure
-         fs = 200
-         [wt, period] = cwt(vectorSamples,fs); 
-
-         dt = 1/fs;
-         Norig = fs;
-         t = 0:dt:(Norig*dt)-dt;
-
-         figure
-         %imageName = strcat('norm_',num2str(count));
-
-         imagesc(t,period, abs(wt));
-
-         
-    end
-    
+    %Change back to overall path
+     cd ([currentPath])
     
     
 end
