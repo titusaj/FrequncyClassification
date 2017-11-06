@@ -36,9 +36,22 @@ for i = 40:20:400 %loops through frequncy
                  set(gca,'YTick',[]) % Remove the ticks in the y axis
                  set(gca,'Position',[0 0 1 1]) % Make the axes occupy the hole figure
                  saveas(gcf,imageName,'png')
+                 
+                 close all
+                 
+                 
 
-                im = imread(strcat(imageName,'.png'));
-                im = imresize(im, [128 128])
+%                 im = imread(strcat(imageName,'.png'));
+%                 im = imresize(im, [64 64]);
+%                 
+%                 
+%                 figure
+%                 imshow(im)
+%                 set(gca,'XTick',[]) % Remove the ticks in the x axis!
+%                 set(gca,'YTick',[]) % Remove the ticks in the y axis
+%                 set(gca,'Position',[0 0 1 1]) % Make the axes occupy the hole figure
+%                 
+%                 saveas(gcf,imageName,'png')
 
             end
     
